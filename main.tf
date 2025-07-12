@@ -5,8 +5,8 @@ data "aws_subnets" "available-subnets"{
     }
 }
 
-resource "aws_eks_cluster" "project-cluster" {
-  name     = "project-cluster"
+resource "aws_eks_cluster" "pankaj-cluster" {
+  name     = "pankaj-cluster"
   role_arn = aws_iam_role.example.arn
 
   vpc_config {
@@ -22,15 +22,15 @@ resource "aws_eks_cluster" "project-cluster" {
 }
 
 output "endpoint" {
-  value = aws_eks_cluster.project-cluster.endpoint
+  value = aws_eks_cluster.pankaj-cluster.endpoint
 }
 
 output "kubeconfig-certificate-authority-data" {
-  value = aws_eks_cluster.project-cluster.certificate_authority[0].data
+  value = aws_eks_cluster.pankaj-cluster.certificate_authority[0].data
 }
 
 resource "aws_eks_node_group" "node-grp" {
-  cluster_name    = aws_eks_cluster.project-cluster.name
+  cluster_name    = aws_eks_cluster.pankaj-cluster.name
   node_group_name = "pc-node-group"
   node_role_arn   = aws_iam_role.worker.arn
   subnet_ids      = data.aws_subnets.available-subnets.ids
